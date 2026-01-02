@@ -1,15 +1,14 @@
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 
 export default function Index() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+    <View style={[harry.container]}>
+      <Text style={[harry.title]}>NumberGuesser</Text>
     </View>
   );
 }
+
+const harry = StyleSheet.create({
+  container: {flex: 1, alignItems: "center", padding: 24},
+  title: {fontSize: 26, fontWeight: "600", marginTop: 20},
+})
