@@ -35,7 +35,7 @@ export default function Index() {
     }
     settarget(parsed);
   }
-  const diff = Math.abs(currrentroundtarget - value);
+  const target_value_difference = Math.abs(currrentroundtarget - value);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[harry.container]}>
@@ -60,7 +60,7 @@ export default function Index() {
       {!running && value !== 0 && (
         <View style={[harry.game]}>
           <Text style={[harry.number]}>You got: {value}</Text>
-          <Text style={[harry.number]}>Difference: {diff}</Text>
+          <Text style={[harry.number]}>Difference: {target_value_difference}</Text>
         </View>
       )}
     </ScrollView>
