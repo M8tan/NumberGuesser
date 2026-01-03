@@ -5,11 +5,13 @@ export default function Index() {
   const [running, setrunning] = useState(false);
   const [targettemp, settargettemp] = useState('')
   const [target, settarget] = useState(20)
+  const [currrentroundtarget, setcurrrentroundtarget] = useState(target);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const startgame = () => {
     if (running) return;
     setvalue(0);
     setrunning(true);
+    setcurrrentroundtarget(target)
     intervalRef.current = setInterval(() => {
       setvalue((prev => prev + 1));
     }, 25);
@@ -24,13 +26,17 @@ export default function Index() {
   }
   const settargethandler = () => {
     const parsed = Number(targettemp);
+    settargettemp('')
     if (isNaN(parsed)) {
       return;
     }
+    if (parsed <= 0) {
+      return;
+    }
     settarget(parsed);
-    settargettemp('')
   }
-  const diff = Math.abs(target - value);
+  const diff = Math.abs(currrentroundtarget - value);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[harry.container]}>
       <Text style={[harry.title]}>NumberGuesser</Text>
@@ -38,10 +44,10 @@ export default function Index() {
         <Text style={[harry.number]}>Target: 
           <TextInput keyboardType="numeric" onChangeText={settargettemp} value={targettemp} placeholder={String(target)} style={[harry.number, {maxWidth: 100, marginLeft: 10, padding: 4}]}></TextInput>
         </Text>
-        <Pressable style={[harry.button, {backgroundColor: "#3849d0ff",}]} onPress={settargethandler}><Text style={[harry.buttonText]}>Set target</Text></Pressable>
+        <Pressable style={[harry.button, {backgroundColor: "#3849d0ff", marginTop:10}]} onPress={settargethandler}><Text style={[harry.buttonText]}>Set target</Text></Pressable>
       </View>
       <View style={[harry.game]}>
-        <Text style={[harry.number]}>{value}</Text>
+        <Text style={[harry.number]}>Count: {value}</Text>
       </View>
       <View style={[harry.buttons]}>
         <Pressable style={[harry.button, {backgroundColor: "#59a76c"}]} onPress={startgame}>
