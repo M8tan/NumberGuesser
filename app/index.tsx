@@ -1,17 +1,36 @@
 import { Text, View, StyleSheet, Pressable } from "react-native";
-
+import { useRef, useState, useEffect } from "react";
 export default function Index() {
+  const [value, setvalue] = useState(0);
+  const [running, setrunning] = useState(false);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const startgame = () => {
+    if (running) return;
+    setvalue(0);
+    setrunning(true);
+    intervalRef.current = setInterval(() => {
+      setvalue((prev => prev + 1));
+    }, 25);
+  }
+  const stopgame = () => {
+    if (!running) return;
+    setrunning(false);
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  }
   return (
     <View style={[harry.container]}>
       <Text style={[harry.title]}>NumberGuesser</Text>
       <View style={[harry.game]}>
-        <Text style={[harry.number]}>placeholder</Text>
+        <Text style={[harry.number]}>{value}</Text>
       </View>
       <View style={[harry.buttons]}>
-        <Pressable style={[harry.button, {backgroundColor: "#59a76c"}]}>
+        <Pressable style={[harry.button, {backgroundColor: "#59a76c"}]} onPress={startgame}>
           <Text>Start</Text>
         </Pressable>
-        <Pressable style={[harry.button, {backgroundColor: "#d9534f"}]}>
+        <Pressable style={[harry.button, {backgroundColor: "#d9534f"}]} onPress={stopgame}>
           <Text>Stop</Text>
         </Pressable>
       </View>
