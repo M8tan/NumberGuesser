@@ -1,8 +1,10 @@
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import { Text, View, StyleSheet, Pressable, TextInput, ScrollView } from "react-native";
 import { useRef, useState, useEffect } from "react";
 export default function Index() {
   const [value, setvalue] = useState(0);
   const [running, setrunning] = useState(false);
+  const [targettemp, settargettemp] = useState('')
+  const [target, settarget] = useState(20)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const startgame = () => {
     if (running) return;
@@ -20,21 +22,42 @@ export default function Index() {
       intervalRef.current = null;
     }
   }
+  const settargethandler = () => {
+    const parsed = Number(targettemp);
+    if (isNaN(parsed)) {
+      return;
+    }
+    settarget(parsed);
+    settargettemp('')
+  }
+  const diff = Math.abs(target - value);
   return (
-    <View style={[harry.container]}>
+    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[harry.container]}>
       <Text style={[harry.title]}>NumberGuesser</Text>
+      <View style={[harry.game]}>
+        <Text style={[harry.number]}>Target: 
+          <TextInput keyboardType="numeric" onChangeText={settargettemp} value={targettemp} placeholder={String(target)} style={[harry.number, {maxWidth: 100, marginLeft: 10, padding: 4}]}></TextInput>
+        </Text>
+        <Pressable style={[harry.button, {backgroundColor: "#3849d0ff",}]} onPress={settargethandler}><Text style={[harry.buttonText]}>Set target</Text></Pressable>
+      </View>
       <View style={[harry.game]}>
         <Text style={[harry.number]}>{value}</Text>
       </View>
       <View style={[harry.buttons]}>
         <Pressable style={[harry.button, {backgroundColor: "#59a76c"}]} onPress={startgame}>
-          <Text>Start</Text>
+          <Text style={[harry.buttonText]}>Start</Text>
         </Pressable>
         <Pressable style={[harry.button, {backgroundColor: "#d9534f"}]} onPress={stopgame}>
-          <Text>Stop</Text>
+          <Text style={[harry.buttonText]}>Stop</Text>
         </Pressable>
       </View>
-    </View>
+      {!running && value !== 0 && (
+        <View style={[harry.game]}>
+          <Text style={[harry.number]}>You got: {value}</Text>
+          <Text style={[harry.number]}>Difference: {diff}</Text>
+        </View>
+      )}
+    </ScrollView>
   );
 }
 
@@ -57,11 +80,13 @@ const harry = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 28,
     borderRadius: 8,
+    alignItems: "center",
   },
   buttonText: {
-    color: "white",
+    color: "#ffffff",
     fontSize: 18,
     fontWeight: "600",
+    padding: 5
   },
   resultcontainer: {
     height: 140,
