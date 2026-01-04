@@ -6,12 +6,19 @@ export default function Index() {
   const [targettemp, settargettemp] = useState('')
   const [target, settarget] = useState(20)
   const [currrentroundtarget, setcurrrentroundtarget] = useState(target);
+  const [tries, settries] = useState(0);
+  const [currrentroundtries, setcurrrentroundtries] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const startgame = () => {
     if (running) return;
     setvalue(0);
     setrunning(true);
-    setcurrrentroundtarget(target)
+    settries(prev => {
+      const newtries = prev + 1;
+      setcurrrentroundtries(newtries);
+      return newtries;
+    });
+    setcurrrentroundtarget(target);
     intervalRef.current = setInterval(() => {
       setvalue((prev => prev + 1));
     }, 25);
@@ -22,6 +29,9 @@ export default function Index() {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
+    }
+    if (value === currrentroundtarget) {
+      settries(0);
     }
   }
   const settargethandler = () => {
@@ -34,9 +44,10 @@ export default function Index() {
       return;
     }
     settarget(parsed);
+    settries(0);
   }
   const target_value_difference = Math.abs(currrentroundtarget - value);
-
+  
   return (
     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[harry.container]}>
       <Text style={[harry.title]}>NumberGuesser</Text>
@@ -61,6 +72,10 @@ export default function Index() {
         <View style={[harry.game]}>
           <Text style={[harry.number]}>You got: {value}</Text>
           <Text style={[harry.number]}>Difference: {target_value_difference}</Text>
+          <Text style={[harry.number]}>Tries: {currrentroundtries}</Text>
+          {target_value_difference <= 5 && target_value_difference != 0 && (
+            <Text style={[harry.number, {color: "#dc8a16ff"}]}>So close!</Text>
+          )}
           {target_value_difference === 0 && (
             <Text style={[harry.number, {color: "#ee30d1ff"}]}>Success!</Text>
           )}
