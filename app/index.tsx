@@ -61,6 +61,9 @@ export default function Index() {
         <View style={[harry.game]}>
           <Text style={[harry.number]}>You got: {value}</Text>
           <Text style={[harry.number]}>Difference: {target_value_difference}</Text>
+          {target_value_difference === 0 && (
+            <Text style={[harry.number, {color: "#ee30d1ff"}]}>Success!</Text>
+          )}
         </View>
       )}
     </ScrollView>
