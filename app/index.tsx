@@ -9,6 +9,7 @@ export default function Index() {
   const [tries, settries] = useState(0);
   const [currentroundtries, setcurrentroundtries] = useState(0);
   const [targetchange, settargetchange] = useState(false);
+  const [shaaahor, setshaaahor] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const startgame = () => {
     if (running) return;
@@ -24,7 +25,7 @@ export default function Index() {
     intervalRef.current = setInterval(() => {
       setvalue((prev => prev + 1));
     }, 25);
-  }
+  };
   const stopgame = () => {
     if (!running) return;
     setrunning(false);
@@ -35,36 +36,43 @@ export default function Index() {
     if (value === currentroundtarget) {
       settries(0);
     }
-  }
+  };
   const settargethandler = () => {
     const parsed = Number(targettemp);
     settargettemp('')
     if (isNaN(parsed) || parsed <= 0) return;
-    settarget(parsed);
-    settries(0);
     if (parsed !== currentroundtarget) {
-    settargetchange(true);
+      settarget(parsed);
+      settries(0);
+      settargetchange(true);
     }
-  }
+  };
   const target_value_difference = Math.abs(currentroundtarget - value);
-  const shaaahor = true;
   const light = {
-    title: "#0f172a",
-  }  
+    background: "#f8fafc",
+    card: "#ffffff",
+    text: "#0f172a",
+    border: "#0f172a",  
+  };  
   const dark = {
-    title: "#e5e7eb",
-  }
+    background: "#020617",
+    card: "#020617",
+    text: "#e5e7eb",
+    border: "#e5e7eb",
+  };
+  const theme = shaaahor ? dark : light;
   return (
-    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[harry.container]}>
-      <Text style={[harry.title, {color: shaaahor ? light.title : dark.title}]}>NumberMatcher</Text>
-      <View style={[harry.game]}>
-        <Text style={[harry.number]}>Target: 
-          <TextInput keyboardType="numeric" onChangeText={settargettemp} value={targettemp} placeholder={String(target)} style={[harry.number, {maxWidth: 100, marginLeft: 10, padding: 4}]}></TextInput>
+    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[harry.container, {backgroundColor: theme.background}]}>
+      <Pressable onPress={() => setshaaahor(prev => !prev)} style={harry.themetoggle}><Text style={{ fontSize: 18 }}>{shaaahor ? "☀️" : "🌙"}</Text></Pressable>
+      <Text style={[harry.title, {color: theme.text}]}>NumberMatcher</Text>
+      <View style={[harry.game, {borderColor: theme.border}]}>
+        <Text style={[harry.number, {color: theme.text}]}>Target: 
+          <TextInput keyboardType="numeric" onChangeText={settargettemp} value={targettemp} placeholder={String(target)} style={[harry.number, {maxWidth: 100, marginLeft: 10, padding: 4, color: theme.text}]}></TextInput>
         </Text>
         <Pressable style={[harry.button, {backgroundColor: "#3849d0ff", marginTop:10}]} onPress={settargethandler}><Text style={[harry.buttonText]}>{targetchange ? "Changed!" : "Set target"}</Text></Pressable>
       </View>
-      <View style={[harry.game]}>
-        <Text style={[harry.number]}>Count: {value}</Text>
+      <View style={[harry.game, {borderColor: theme.border}]}>
+        <Text style={[harry.number, {color: theme.text}]}>Count: {value}</Text>
       </View>
       <View style={[harry.buttons]}>
         <Pressable style={[harry.button, {backgroundColor: "#59a76c"}]} onPress={startgame}>
@@ -75,10 +83,10 @@ export default function Index() {
         </Pressable>
       </View>
       {!running && value !== 0 && (
-        <View style={[harry.game]}>
-          <Text style={[harry.number]}>You got: {value}</Text>
-          <Text style={[harry.number]}>Difference: {target_value_difference}</Text>
-          <Text style={[harry.number]}>Tries: {currentroundtries}</Text>
+        <View style={[harry.game, {borderColor: theme.border}]}>
+          <Text style={[harry.number, {color: theme.text}]}>You got: {value}</Text>
+          <Text style={[harry.number, {color: theme.text}]}>Difference: {target_value_difference}</Text>
+          <Text style={[harry.number, {color: theme.text}]}>Tries: {currentroundtries}</Text>
           {target_value_difference <= 5 && target_value_difference != 0 && (
             <Text style={[harry.number, {color: "#dc8a16ff"}]}>So close!</Text>
           )}
@@ -93,6 +101,15 @@ export default function Index() {
 
 const harry = StyleSheet.create({
   container: {flex: 1, alignItems: "center", padding: 24},
+  themetoggle: {
+  position: "absolute",
+  top: 16,
+  right: 16,
+  padding: 10,
+  borderRadius: 20,
+  zIndex: 10,
+},
+
   title: {fontSize: 32, fontWeight: "600", marginTop: 20, marginBottom: 40},
   game: {borderWidth: 2,
     borderRadius: 12,
