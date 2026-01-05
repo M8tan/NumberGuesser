@@ -47,10 +47,16 @@ export default function Index() {
     settries(0);
   }
   const target_value_difference = Math.abs(currrentroundtarget - value);
-  
+  const shaaahor = true;
+  const light = {
+    title: "#0f172a",
+  }  
+  const dark = {
+    title: "#e5e7eb",
+  }
   return (
     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[harry.container]}>
-      <Text style={[harry.title]}>NumberMatcher</Text>
+      <Text style={[harry.title, {color: shaaahor ? light.title : dark.title}]}>NumberMatcher</Text>
       <View style={[harry.game]}>
         <Text style={[harry.number]}>Target: 
           <TextInput keyboardType="numeric" onChangeText={settargettemp} value={targettemp} placeholder={String(target)} style={[harry.number, {maxWidth: 100, marginLeft: 10, padding: 4}]}></TextInput>
