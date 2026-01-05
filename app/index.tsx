@@ -75,26 +75,24 @@ useEffect(() => {
     background: "#f8fafc",
     card: "#ffffff",
     text: "#0f172a",
-    border: "#0f172a",  
   };  
   const dark = {
     background: "#020617",
     card: "#020617",
     text: "#e5e7eb",
-    border: "#e5e7eb",
   };
   const theme = shaaahor ? dark : light;
   return (
     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[harry.container, {backgroundColor: theme.background}]}>
-      <Pressable onPress={() => setshaaahor(prev => !prev)} style={harry.themetoggle}><Text style={{ fontSize: 18 }}>{shaaahor ? "☀️" : "🌙"}</Text></Pressable>
+      <Pressable onPress={() => setshaaahor(prev => !prev)} style={harry.themetoggle}><Text style={{ fontSize: 22 }}>{shaaahor ? "☀️" : "🌙"}</Text></Pressable>
       <Text style={[harry.title, {color: theme.text}]}>NumberMatcher</Text>
-      <View style={[harry.game, {borderColor: theme.border}]}>
+      <View style={[harry.game, {borderColor: theme.text}]}>
         <Text style={[harry.number, {color: theme.text}]}>Target: 
           <TextInput keyboardType="numeric" onChangeText={settargettemp} value={targettemp} placeholder={String(target)} style={[harry.number, {maxWidth: 100, marginLeft: 10, padding: 4, color: theme.text}]}></TextInput>
         </Text>
         <Pressable style={[harry.button, {backgroundColor: "#3849d0ff", marginTop:10}]} onPress={settargethandler}><Text style={[harry.buttonText]}>{targetchange ? "Changed!" : "Set target"}</Text></Pressable>
       </View>
-      <View style={[harry.game, {borderColor: theme.border}]}>
+      <View style={[harry.game, {borderColor: theme.text}]}>
         <Text style={[harry.number, {color: theme.text}]}>Count: {value}</Text>
       </View>
       <View style={[harry.buttons]}>
@@ -106,7 +104,7 @@ useEffect(() => {
         </Pressable>
       </View>
       {!running && value !== 0 && (
-        <View style={[harry.game, {borderColor: theme.border}]}>
+        <View style={[harry.game, {borderColor: theme.text}]}>
           <Text style={[harry.number, {color: theme.text}]}>You got: {value}</Text>
           <Text style={[harry.number, {color: theme.text}]}>Difference: {target_value_difference}</Text>
           <Text style={[harry.number, {color: theme.text}]}>Tries: {currentroundtries}</Text>
