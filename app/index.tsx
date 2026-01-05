@@ -1,5 +1,6 @@
 import { Text, View, StyleSheet, Pressable, TextInput, ScrollView } from "react-native";
 import { useRef, useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function Index() {
   const [value, setvalue] = useState(0);
   const [running, setrunning] = useState(false);
@@ -10,6 +11,7 @@ export default function Index() {
   const [currentroundtries, setcurrentroundtries] = useState(0);
   const [targetchange, settargetchange] = useState(false);
   const [shaaahor, setshaaahor] = useState(false);
+  const ThemeKey = "@ThemeKey";
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const startgame = () => {
     if (running) return;
@@ -47,6 +49,27 @@ export default function Index() {
       settargetchange(true);
     }
   };
+  useEffect(() => {
+    const loadtheme = async () => {
+    try {
+      const savedtheme = await AsyncStorage.getItem(ThemeKey);
+      if (savedtheme !== null) {
+        setshaaahor(savedtheme === "dark");
+      }
+    } catch (e) {
+      console.log("Theme loading failed. ", e);
+    }
+  };
+loadtheme();}, [])
+useEffect(() => {
+  const savetheme = async () => {
+    try { 
+      await AsyncStorage.setItem(ThemeKey, shaaahor ? "dark" : "light");
+    } catch (e) {
+      console.log("Save theme failed. " ,e)
+    }
+  };
+  savetheme();}, [shaaahor])
   const target_value_difference = Math.abs(currentroundtarget - value);
   const light = {
     background: "#f8fafc",
