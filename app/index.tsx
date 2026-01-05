@@ -5,20 +5,22 @@ export default function Index() {
   const [running, setrunning] = useState(false);
   const [targettemp, settargettemp] = useState('')
   const [target, settarget] = useState(20)
-  const [currrentroundtarget, setcurrrentroundtarget] = useState(target);
+  const [currentroundtarget, setcurrentroundtarget] = useState(target);
   const [tries, settries] = useState(0);
-  const [currrentroundtries, setcurrrentroundtries] = useState(0);
+  const [currentroundtries, setcurrentroundtries] = useState(0);
+  const [targetchange, settargetchange] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const startgame = () => {
     if (running) return;
+    settargetchange(false);
     setvalue(0);
     setrunning(true);
     settries(prev => {
       const newtries = prev + 1;
-      setcurrrentroundtries(newtries);
+      setcurrentroundtries(newtries);
       return newtries;
     });
-    setcurrrentroundtarget(target);
+    setcurrentroundtarget(target);
     intervalRef.current = setInterval(() => {
       setvalue((prev => prev + 1));
     }, 25);
@@ -30,23 +32,21 @@ export default function Index() {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-    if (value === currrentroundtarget) {
+    if (value === currentroundtarget) {
       settries(0);
     }
   }
   const settargethandler = () => {
     const parsed = Number(targettemp);
     settargettemp('')
-    if (isNaN(parsed)) {
-      return;
-    }
-    if (parsed <= 0) {
-      return;
-    }
+    if (isNaN(parsed) || parsed <= 0) return;
     settarget(parsed);
     settries(0);
+    if (parsed !== currentroundtarget) {
+    settargetchange(true);
+    }
   }
-  const target_value_difference = Math.abs(currrentroundtarget - value);
+  const target_value_difference = Math.abs(currentroundtarget - value);
   const shaaahor = true;
   const light = {
     title: "#0f172a",
@@ -61,7 +61,7 @@ export default function Index() {
         <Text style={[harry.number]}>Target: 
           <TextInput keyboardType="numeric" onChangeText={settargettemp} value={targettemp} placeholder={String(target)} style={[harry.number, {maxWidth: 100, marginLeft: 10, padding: 4}]}></TextInput>
         </Text>
-        <Pressable style={[harry.button, {backgroundColor: "#3849d0ff", marginTop:10}]} onPress={settargethandler}><Text style={[harry.buttonText]}>Set target</Text></Pressable>
+        <Pressable style={[harry.button, {backgroundColor: "#3849d0ff", marginTop:10}]} onPress={settargethandler}><Text style={[harry.buttonText]}>{targetchange ? "Changed!" : "Set target"}</Text></Pressable>
       </View>
       <View style={[harry.game]}>
         <Text style={[harry.number]}>Count: {value}</Text>
@@ -78,7 +78,7 @@ export default function Index() {
         <View style={[harry.game]}>
           <Text style={[harry.number]}>You got: {value}</Text>
           <Text style={[harry.number]}>Difference: {target_value_difference}</Text>
-          <Text style={[harry.number]}>Tries: {currrentroundtries}</Text>
+          <Text style={[harry.number]}>Tries: {currentroundtries}</Text>
           {target_value_difference <= 5 && target_value_difference != 0 && (
             <Text style={[harry.number, {color: "#dc8a16ff"}]}>So close!</Text>
           )}
