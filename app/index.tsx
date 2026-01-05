@@ -50,7 +50,7 @@ export default function Index() {
   
   return (
     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[harry.container]}>
-      <Text style={[harry.title]}>NumberGuesser</Text>
+      <Text style={[harry.title]}>NumberMatcher</Text>
       <View style={[harry.game]}>
         <Text style={[harry.number]}>Target: 
           <TextInput keyboardType="numeric" onChangeText={settargettemp} value={targettemp} placeholder={String(target)} style={[harry.number, {maxWidth: 100, marginLeft: 10, padding: 4}]}></TextInput>
