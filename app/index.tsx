@@ -10,11 +10,13 @@ export default function Index() {
   const [tries, settries] = useState(0);
   const [currentroundtries, setcurrentroundtries] = useState(0);
   const [targetchange, settargetchange] = useState(false);
+  const [validtarget, setvalidtarget] = useState(true);
   const [shaaahor, setshaaahor] = useState(false);
   const ThemeKey = "@ThemeKey";
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const startgame = () => {
     if (running) return;
+    setvalidtarget(true);
     settargetchange(false);
     setvalue(0);
     setrunning(true);
@@ -42,12 +44,16 @@ export default function Index() {
   const settargethandler = () => {
     const parsed = Number(targettemp);
     settargettemp('')
-    if (isNaN(parsed) || parsed <= 0) return;
+    if (isNaN(parsed) || parsed <= 0 || parsed >= 1000000) {
+      setvalidtarget(false);
+      return;
+    }
     if (parsed !== currentroundtarget) {
       settarget(parsed);
       settries(0);
       settargetchange(true);
     }
+    setvalidtarget(true);
   };
   useEffect(() => {
     const loadtheme = async () => {
@@ -82,6 +88,8 @@ useEffect(() => {
     text: "#e5e7eb",
   };
   const theme = shaaahor ? dark : light;
+  if (value === 1000000) stopgame();
+  
   return (
     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[harry.container, {backgroundColor: theme.background}]}>
       <Pressable onPress={() => setshaaahor(prev => !prev)} style={harry.themetoggle}><Text style={{ fontSize: 22 }}>{shaaahor ? "☀️" : "🌙"}</Text></Pressable>
@@ -90,7 +98,7 @@ useEffect(() => {
         <Text style={[harry.number, {color: theme.text}]}>Target: 
           <TextInput keyboardType="numeric" onChangeText={settargettemp} value={targettemp} placeholder={String(target)} style={[harry.number, {maxWidth: 100, marginLeft: 10, padding: 4, color: theme.text}]}></TextInput>
         </Text>
-        <Pressable style={[harry.button, {backgroundColor: "#3849d0ff", marginTop:10}]} onPress={settargethandler}><Text style={[harry.buttonText]}>{targetchange ? "Changed!" : "Set target"}</Text></Pressable>
+        <Pressable style={[harry.button, {backgroundColor: "#3849d0ff", marginTop:10}]} onPress={settargethandler}><Text style={[harry.buttonText]}>{ validtarget ? targetchange ? "Changed!" : "Set target" : "Invalid" }</Text></Pressable>
       </View>
       <View style={[harry.game, {borderColor: theme.text}]}>
         <Text style={[harry.number, {color: theme.text}]}>Count: {value}</Text>
