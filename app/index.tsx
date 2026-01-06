@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Pressable, TextInput, ScrollView } from "react-native";
+import { Text, View, StyleSheet, Pressable, TextInput, ScrollView, Animated } from "react-native";
 import { useRef, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function Index() {
@@ -44,7 +44,7 @@ export default function Index() {
   const settargethandler = () => {
     const parsed = Number(targettemp);
     settargettemp('')
-    if (isNaN(parsed) || parsed <= 0 || parsed >= 1000000) {
+    if (isNaN(parsed) || parsed <= 0 || parsed >= 999999) {
       setvalidtarget(false);
       return;
     }
@@ -55,6 +55,14 @@ export default function Index() {
     }
     setvalidtarget(true);
   };
+  const themeanimation = useRef(new Animated.Value(shaaahor ? 1 : 0)).current;
+  useEffect(() => {
+    Animated.timing(themeanimation, {
+      toValue: shaaahor ? 1 : 0,
+      duration: 1000,
+      useNativeDriver: false,
+    }).start();
+  }, [shaaahor]);
   useEffect(() => {
     const loadtheme = async () => {
     try {
@@ -87,44 +95,62 @@ useEffect(() => {
     card: "#020617",
     text: "#e5e7eb",
   };
-  const theme = shaaahor ? dark : light;
+  const backgroundColor = themeanimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["#f8fafc", "#020617"]
+  });
+  const textcolor = themeanimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["#0f172a", "#e5e7eb"]
+  });
+  const inputbackgroundcolor = themeanimation.interpolate({
+  inputRange: [0, 1],
+  outputRange: ["#ffffff", "#020617"],
+});
+
+const inputtextcolor = themeanimation.interpolate({
+  inputRange: [0, 1],
+  outputRange: ["#0f172a", "#e5e7eb"],
+});
   if (value === 1000000) stopgame();
   
   return (
-    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[harry.container, {backgroundColor: theme.background}]}>
+    <Animated.ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={harry.container} style={{ backgroundColor }}>
       <Pressable onPress={() => setshaaahor(prev => !prev)} style={harry.themetoggle}><Text style={{ fontSize: 22 }}>{shaaahor ? "☀️" : "🌙"}</Text></Pressable>
-      <Text style={[harry.title, {color: theme.text}]}>NumberMatcher</Text>
-      <View style={[harry.game, {borderColor: theme.text}]}>
-        <Text style={[harry.number, {color: theme.text}]}>Target: 
-          <TextInput keyboardType="numeric" onChangeText={settargettemp} value={targettemp} placeholder={String(target)} style={[harry.number, {maxWidth: 100, marginLeft: 10, padding: 4, color: theme.text}]}></TextInput>
-        </Text>
-        <Pressable style={[harry.button, {backgroundColor: "#3849d0ff", marginTop:10}]} onPress={settargethandler}><Text style={[harry.buttonText]}>{ validtarget ? targetchange ? "Changed!" : "Set target" : "Invalid" }</Text></Pressable>
-      </View>
-      <View style={[harry.game, {borderColor: theme.text}]}>
-        <Text style={[harry.number, {color: theme.text}]}>Count: {value}</Text>
-      </View>
+      <Animated.Text style={[harry.title, {color: textcolor}]}>NumberMatcher</Animated.Text>
+      <Animated.View style={[harry.game, {borderColor: textcolor}]}>
+        <Animated.Text style={[harry.number, {color: textcolor}]}>Target:
+          <Animated.View style={{backgroundColor: inputbackgroundcolor, borderRadius: 6, marginLeft: 10}}>
+            <TextInput keyboardType="numeric" onChangeText={settargettemp} value={targettemp} placeholder={String(target)} placeholderTextColor={shaaahor ? "#9ca3af" : "#64748b"} style={[harry.number, {maxWidth: 100, marginLeft: 10, padding: 4, color: shaaahor ? "#e5e7eb" : "#0f172a"}]}></TextInput>
+          </Animated.View> 
+        </Animated.Text>
+        <Pressable style={[harry.button, {backgroundColor: "#3849d0ff", marginTop:10}]} onPress={settargethandler}><Animated.Text style={[harry.buttonText, {color: textcolor}]}>{ validtarget ? targetchange ? "Changed!" : "Set target" : "Invalid" }</Animated.Text></Pressable>
+      </Animated.View>
+      <Animated.View style={[harry.game, {borderColor: textcolor}]}>
+        <Animated.Text style={[harry.number, {color: textcolor}]}>Count: {value}</Animated.Text>
+      </Animated.View>
       <View style={[harry.buttons]}>
         <Pressable style={[harry.button, {backgroundColor: "#59a76c"}]} onPress={startgame}>
-          <Text style={[harry.buttonText]}>Start</Text>
+          <Animated.Text style={[harry.buttonText, {color:textcolor}]}>Start</Animated.Text>
         </Pressable>
         <Pressable style={[harry.button, {backgroundColor: "#d9534f"}]} onPress={stopgame}>
-          <Text style={[harry.buttonText]}>Stop</Text>
+          <Animated.Text style={[harry.buttonText, {color: textcolor}]}>Stop</Animated.Text>
         </Pressable>
       </View>
       {!running && value !== 0 && (
-        <View style={[harry.game, {borderColor: theme.text}]}>
-          <Text style={[harry.number, {color: theme.text}]}>You got: {value}</Text>
-          <Text style={[harry.number, {color: theme.text}]}>Difference: {target_value_difference}</Text>
-          <Text style={[harry.number, {color: theme.text}]}>Tries: {currentroundtries}</Text>
+        <Animated.View style={[harry.game, {borderColor: textcolor}]}>
+          <Animated.Text style={[harry.number, {color: textcolor}]}>You got: {value}</Animated.Text>
+          <Animated.Text style={[harry.number, {color: textcolor}]}>Difference: {target_value_difference}</Animated.Text>
+          <Animated.Text style={[harry.number, {color: textcolor}]}>Tries: {currentroundtries}</Animated.Text>
           {target_value_difference <= 5 && target_value_difference != 0 && (
             <Text style={[harry.number, {color: "#dc8a16ff"}]}>So close!</Text>
           )}
           {target_value_difference === 0 && (
             <Text style={[harry.number, {color: "#ee30d1ff"}]}>Success!</Text>
           )}
-        </View>
+        </Animated.View>
       )}
-    </ScrollView>
+    </Animated.ScrollView>
   );
 }
 
@@ -159,7 +185,6 @@ const harry = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    color: "#ffffff",
     fontSize: 18,
     fontWeight: "600",
     padding: 5
