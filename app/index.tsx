@@ -1,6 +1,7 @@
 import { Text, View, StyleSheet, Pressable, TextInput, ScrollView, Animated } from "react-native";
 import { useRef, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Stack } from "expo-router";
 export default function Index() {
   const [value, setvalue] = useState(0);
   const [running, setrunning] = useState(false);
@@ -14,6 +15,7 @@ export default function Index() {
   const [shaaahor, setshaaahor] = useState(false);
   const ThemeKey = "@ThemeKey";
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
   const startgame = () => {
     if (running) return;
     setvalidtarget(true);
@@ -113,15 +115,17 @@ const inputtextcolor = themeanimation.interpolate({
   outputRange: ["#0f172a", "#e5e7eb"],
 });
   if (value === 1000000) stopgame();
-  
+  //<Stack.Screen options={{headerStyle: { backgroundColor: shaaahor ? "#020617" : "#f8fafc"}, headerTintColor: shaaahor ? "#e5e7eb" : "#0f172a", headerTitleStyle: {fontWeight: "600"}, title: "NumberMatcher"}} />
   return (
+    <>
+    <Stack.Screen options={{headerShown: false}} />
     <Animated.ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={harry.container} style={{ backgroundColor }}>
       <Pressable onPress={() => setshaaahor(prev => !prev)} style={harry.themetoggle}><Text style={{ fontSize: 22 }}>{shaaahor ? "☀️" : "🌙"}</Text></Pressable>
       <Animated.Text style={[harry.title, {color: textcolor}]}>NumberMatcher</Animated.Text>
       <Animated.View style={[harry.game, {borderColor: textcolor}]}>
         <Animated.Text style={[harry.number, {color: textcolor}]}>Target:
           <Animated.View style={{backgroundColor: inputbackgroundcolor, borderRadius: 6, marginLeft: 10}}>
-            <TextInput keyboardType="numeric" onChangeText={settargettemp} value={targettemp} placeholder={String(target)} placeholderTextColor={shaaahor ? "#9ca3af" : "#64748b"} style={[harry.number, {maxWidth: 100, marginLeft: 10, padding: 4, color: shaaahor ? "#e5e7eb" : "#0f172a"}]}></TextInput>
+            <AnimatedTextInput keyboardType="numeric" onChangeText={settargettemp} value={targettemp} placeholder={String(target)} placeholderTextColor={"#9ca3af"} style={[harry.number, {maxWidth: 100, marginLeft: 10, padding: 4, color: inputtextcolor}]}></AnimatedTextInput>
           </Animated.View> 
         </Animated.Text>
         <Pressable style={[harry.button, {backgroundColor: "#3849d0ff", marginTop:10}]} onPress={settargethandler}><Animated.Text style={[harry.buttonText, {color: textcolor}]}>{ validtarget ? targetchange ? "Changed!" : "Set target" : "Invalid" }</Animated.Text></Pressable>
@@ -151,7 +155,9 @@ const inputtextcolor = themeanimation.interpolate({
         </Animated.View>
       )}
     </Animated.ScrollView>
+    </>
   );
+  
 }
 
 const harry = StyleSheet.create({
