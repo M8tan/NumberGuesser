@@ -146,7 +146,7 @@ const inputtextcolor = themeanimation.interpolate({
             <Text style={[harry.number, {color: "#dc8a16ff"}]}>So close!</Text>
           )}
           {target_value_difference === 0 && (
-            <Text style={[harry.number, {color: "#ee30d1ff"}]}>Success!</Text>
+            <Text style={[harry.number, {color: "#ee30d1ff", alignSelf: "center"}]}>Success!</Text>
           )}
         </Animated.View>
       )}
