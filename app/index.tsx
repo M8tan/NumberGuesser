@@ -6,7 +6,7 @@ export default function Index() {
   const [value, setvalue] = useState(0);
   const [running, setrunning] = useState(false);
   const [targettemp, settargettemp] = useState('')
-  const [target, settarget] = useState(20)
+  const [target, settarget] = useState(100)
   const [currentroundtarget, setcurrentroundtarget] = useState(target);
   const [tries, settries] = useState(0);
   const [currentroundtries, setcurrentroundtries] = useState(0);
