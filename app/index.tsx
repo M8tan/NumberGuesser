@@ -128,7 +128,7 @@ const inputtextcolor = themeanimation.interpolate({
             <AnimatedTextInput keyboardType="numeric" onChangeText={settargettemp} value={targettemp} placeholder={String(target)} placeholderTextColor={"#9ca3af"} style={[harry.number, {maxWidth: 100, marginLeft: 10, padding: 4, color: inputtextcolor}]}></AnimatedTextInput>
           </Animated.View> 
         </Animated.Text>
-        <Pressable style={[harry.button, {backgroundColor: "#3849d0ff", marginTop:10}]} onPress={settargethandler}><Animated.Text style={[harry.buttonText, {color: textcolor}]}>{ validtarget ? targetchange ? "Changed!" : "Set target" : "Invalid" }</Animated.Text></Pressable>
+        <Pressable style={[harry.button, {backgroundColor: "#3849d0ff", marginTop:10}]} onPress={settargethandler}><Animated.Text style={[harry.buttonText, {color: textcolor}]}>{ validtarget ? targetchange ? "Changed!" : "Set target" : "Invalid target" }</Animated.Text></Pressable>
       </Animated.View>
       <Animated.View style={[harry.game, {borderColor: textcolor}]}>
         <Animated.Text style={[harry.number, {color: textcolor}]}>Count: {value}</Animated.Text>
