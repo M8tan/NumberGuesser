@@ -132,6 +132,7 @@ const inputtextcolor = themeanimation.interpolate({
       </Animated.View>
       <Animated.View style={[harry.game, {borderColor: textcolor}]}>
         <Animated.Text style={[harry.number, {color: textcolor}]}>Count: {value}</Animated.Text>
+        <Animated.Text style={[harry.number, {color: textcolor}]}>Tries: {currentroundtries}</Animated.Text>
       </Animated.View>
       <View style={[harry.buttons]}>
         <Pressable style={[harry.button, {backgroundColor: "#59a76c"}]} onPress={startgame}>
@@ -145,7 +146,6 @@ const inputtextcolor = themeanimation.interpolate({
         <Animated.View style={[harry.game, {borderColor: textcolor}]}>
           <Animated.Text style={[harry.number, {color: textcolor}]}>You got: {value}</Animated.Text>
           <Animated.Text style={[harry.number, {color: textcolor}]}>Difference: {target_value_difference}</Animated.Text>
-          <Animated.Text style={[harry.number, {color: textcolor}]}>Tries: {currentroundtries}</Animated.Text>
           {target_value_difference <= 5 && target_value_difference != 0 && (
             <Text style={[harry.number, {color: "#dc8a16ff"}]}>So close!</Text>
           )}
