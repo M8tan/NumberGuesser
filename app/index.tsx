@@ -15,7 +15,6 @@ export default function Index() {
   const [shaaahor, setshaaahor] = useState(false);
   const ThemeKey = "@ThemeKey";
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
   const startgame = () => {
     if (running) return;
     setvalidtarget(true);
@@ -87,16 +86,7 @@ useEffect(() => {
   };
   savetheme();}, [shaaahor])
   const target_value_difference = Math.abs(currentroundtarget - value);
-  const light = {
-    background: "#f8fafc",
-    card: "#ffffff",
-    text: "#0f172a",
-  };  
-  const dark = {
-    background: "#020617",
-    card: "#020617",
-    text: "#e5e7eb",
-  };
+ 
   const backgroundColor = themeanimation.interpolate({
     inputRange: [0, 1],
     outputRange: ["#f8fafc", "#020617"]
@@ -126,7 +116,7 @@ const inputtextcolor = themeanimation.interpolate({
         <View style={harry.targetrow}>
           <Animated.Text style={[harry.targetlabel, {color: textcolor}]}>Target:</Animated.Text>
           <Animated.View style={[harry.targetinputwrapper, { backgroundColor: backgroundColor }]}>
-            <AnimatedTextInput keyboardType="numeric" onChangeText={settargettemp} value={targettemp} placeholder={String(target)} placeholderTextColor={"#9ca3af"} style={{fontSize: 18, color: inputtextcolor}}></AnimatedTextInput>
+            <TextInput keyboardType="numeric" onChangeText={settargettemp} value={targettemp} placeholder={String(target)} placeholderTextColor={"#9ca3af"} style={{fontSize: 18, color: shaaahor ? "#e5e7eb" : "#0f172a", textAlign: "center"}}></TextInput>
           </Animated.View>
             </View>
         <Pressable style={[harry.button, {backgroundColor: "#3849d0ff", alignSelf: "center"}]} onPress={settargethandler}><Animated.Text style={[harry.buttonText, {color: inputtextcolor}]}>{ validtarget ? targetchange ? "Target set!" : "Set target" : "Invalid target" }</Animated.Text></Pressable>
