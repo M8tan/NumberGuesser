@@ -122,14 +122,15 @@ const inputtextcolor = themeanimation.interpolate({
     <Animated.ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={harry.container} style={{ backgroundColor }}>
       <Pressable onPress={() => setshaaahor(prev => !prev)} style={harry.themetoggle}><Text style={{ fontSize: 22 }}>{shaaahor ? "☀️" : "🌙"}</Text></Pressable>
       <Animated.Text style={[harry.title, {color: textcolor}]}>NumberMatcher</Animated.Text>
-      <Animated.View style={[harry.game, {borderColor: textcolor}]}>
-        <Animated.Text style={[harry.number, {color: textcolor}]}>Target:
-          <Animated.View style={{backgroundColor: inputbackgroundcolor, borderRadius: 6, marginLeft: 10}}>
-            <AnimatedTextInput keyboardType="numeric" onChangeText={settargettemp} value={targettemp} placeholder={String(target)} placeholderTextColor={"#9ca3af"} style={[harry.number, {maxWidth: 100, marginLeft: 10, padding: 4, color: inputtextcolor}]}></AnimatedTextInput>
+      <Animated.View style={[harry.targetcard, { backgroundColor: inputbackgroundcolor, borderColor: textcolor}]}>
+        <View style={harry.targetrow}>
+          <Animated.Text style={[harry.targetlabel, {color: textcolor}]}>Target:</Animated.Text>
+          <Animated.View style={[harry.targetinputwrapper, { backgroundColor: backgroundColor }]}>
+            <AnimatedTextInput keyboardType="numeric" onChangeText={settargettemp} value={targettemp} placeholder={String(target)} placeholderTextColor={"#9ca3af"} style={{fontSize: 18, color: inputtextcolor}}></AnimatedTextInput>
+          </Animated.View>
+            </View>
+        <Pressable style={[harry.button, {backgroundColor: "#3849d0ff", alignSelf: "center"}]} onPress={settargethandler}><Animated.Text style={[harry.buttonText, {color: inputtextcolor}]}>{ validtarget ? targetchange ? "Target set!" : "Set target" : "Invalid target" }</Animated.Text></Pressable>
           </Animated.View> 
-        </Animated.Text>
-        <Pressable style={[harry.button, {backgroundColor: "#3849d0ff", marginTop:10}]} onPress={settargethandler}><Animated.Text style={[harry.buttonText, {color: textcolor}]}>{ validtarget ? targetchange ? "Target set!" : "Set target" : "Invalid target" }</Animated.Text></Pressable>
-      </Animated.View>
       <Animated.View style={[harry.game, {borderColor: textcolor}]}>
         <Animated.Text style={[harry.number, {color: textcolor}]}>Count: {value}</Animated.Text>
         <Animated.Text style={[harry.number, {color: textcolor}]}>Tries: {currentroundtries}</Animated.Text>
@@ -178,6 +179,33 @@ const harry = StyleSheet.create({
     paddingHorizontal: 40,
     marginBottom: 30,
   },
+  targetcard: {
+  width: "100%",
+  maxWidth: 320,
+  borderRadius: 14,
+  padding: 16,
+  marginBottom: 30,
+  borderWidth: 1,
+},
+targetrow: {
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: 8,
+  marginBottom: 12,
+},
+targetlabel: {
+  fontSize: 20,
+  fontWeight: "500",
+  marginRight: 10,
+},
+targetinputwrapper: {
+  width: 80,
+  borderRadius: 8,
+  paddingHorizontal: 8,
+  paddingVertical: 4,
+},
+
   number: {fontSize: 20, fontWeight: "500"},
   buttons: {
     flexDirection: "row",
