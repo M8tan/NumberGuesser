@@ -110,7 +110,7 @@ const inputtextcolor = themeanimation.interpolate({
     <>
     <Stack.Screen options={{headerShown: false}} />
     <Animated.ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={harry.container} style={{ backgroundColor }}>
-      <Pressable onPress={() => setshaaahor(prev => !prev)} style={harry.themetoggle}><Text style={{ fontSize: 22 }}>{shaaahor ? "☀️" : "🌙"}</Text></Pressable>
+      <Pressable onPress={() => setshaaahor(prev => !prev)} style={harry.themetoggle}><Animated.Text style={{ fontSize: 22, opacity: themeanimation.interpolate({inputRange: [0, 1], outputRange: [1, 0]}), transform: [{rotate: themeanimation.interpolate({inputRange: [0, 1], outputRange: ["0deg", "180deg"]}),}, {scale: themeanimation.interpolate({inputRange: [0, 1], outputRange: [1, 0.8]})}] }}>🌙</Animated.Text><Animated.Text style={{ fontSize: 22, position: "absolute", opacity: themeanimation.interpolate({inputRange: [0, 1], outputRange: [0, 1]}), transform: [{rotate: themeanimation.interpolate({inputRange: [0, 1], outputRange: ["-180deg", "0deg"]}),}, {scale: themeanimation.interpolate({inputRange: [0, 1], outputRange: [0.8, 1]})}] }}>☀️</Animated.Text></Pressable>
       <Animated.Text style={[harry.title, {color: textcolor}]}>NumberMatcher</Animated.Text>
       <Animated.View style={[harry.targetcard, { backgroundColor: inputbackgroundcolor, borderColor: textcolor}]}>
         <View style={harry.targetrow}>
