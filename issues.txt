@@ -1,5 +1,3 @@
-Realised the name is number guesser but should be number matcher
- Tries - different location? UI wise - done?
 add close calls
 add encouraging messages
 improve outcome ui
