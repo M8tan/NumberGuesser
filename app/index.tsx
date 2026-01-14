@@ -15,6 +15,7 @@ export default function Index() {
   const [shaaahor, setshaaahor] = useState(false);
   const ThemeKey = "@ThemeKey";
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const ClearTarget = () => {settargettemp(''); return}
   const startgame = () => {
     if (running) return;
     setvalidtarget(true);
@@ -43,17 +44,21 @@ export default function Index() {
     }
   };
   const settargethandler = () => {
+    if (running) {settargettemp('');return};
     const parsed = Number(targettemp);
-    settargettemp('')
     if (isNaN(parsed) || parsed <= 0 || parsed >= 999999) {
       setvalidtarget(false);
+      settargettemp('');
+      setTimeout(() => setvalidtarget(true), 1200);
       return;
     }
-    if (parsed !== currentroundtarget) {
+    if (parsed !== target) {
       settarget(parsed);
       settries(0);
       settargetchange(true);
+      setTimeout(() => settargetchange(false), 1200);
     }
+    settargettemp('');
     setvalidtarget(true);
   };
   const themeanimation = useRef(new Animated.Value(shaaahor ? 1 : 0)).current;
