@@ -77,7 +77,7 @@ export default function Index() {
         setshaaahor(savedtheme === "dark");
       }
     } catch (e) {
-      console.log("Theme loading failed. ", e);
+      console.log("Theme loading failed :( ", e);
     }
   };
 loadtheme();}, [])
@@ -86,7 +86,7 @@ useEffect(() => {
     try { 
       await AsyncStorage.setItem(ThemeKey, shaaahor ? "dark" : "light");
     } catch (e) {
-      console.log("Save theme failed. " ,e)
+      console.log("Save theme failed :( " ,e)
     }
   };
   savetheme();}, [shaaahor])
