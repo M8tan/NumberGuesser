@@ -110,7 +110,6 @@ const inputtextcolor = themeanimation.interpolate({
   outputRange: ["#0f172a", "#e5e7eb"],
 });
   if (value === 1000000) stopgame();
-  //<Stack.Screen options={{headerStyle: { backgroundColor: shaaahor ? "#020617" : "#f8fafc"}, headerTintColor: shaaahor ? "#e5e7eb" : "#0f172a", headerTitleStyle: {fontWeight: "600"}, title: "NumberMatcher"}} />
   return (
     <>
     <Stack.Screen options={{headerShown: false}} />
