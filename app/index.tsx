@@ -15,7 +15,6 @@ export default function Index() {
   const [shaaahor, setshaaahor] = useState(false);
   const ThemeKey = "@ThemeKey";
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const ClearTarget = () => {settargettemp(''); return}
   const startgame = () => {
     if (running) return;
     setvalidtarget(true);
