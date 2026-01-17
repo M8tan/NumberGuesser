@@ -29,7 +29,7 @@ export default function Index() {
     setcurrentroundtarget(target);
     intervalRef.current = setInterval(() => {
       setvalue((prev => prev + 1));
-    }, 20); //Used to be 25
+    }, 20); //Used to be 25, changed to 20 for higher speed
   };
   const stopgame = () => {
     if (!running) return;
