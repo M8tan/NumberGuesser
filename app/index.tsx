@@ -155,21 +155,21 @@ const inputtextcolor = themeanimation.interpolate({
 }
 
 const harry = StyleSheet.create({
-  container: {flex: 1, alignItems: "center", padding: 24},
+  container: {flex: 1, alignItems: "center", padding: 24,},
   themetoggle: {position: "absolute", top: 16, right: 16, padding: 10, borderRadius: 20, zIndex: 10,},
-  title: {fontSize: 32, fontWeight: "600", marginTop: 20, marginBottom: 40},
+  title: {fontSize: 32, fontWeight: "600", marginTop: 20, marginBottom: 40,},
   game: {borderWidth: 2, borderRadius: 12, paddingVertical: 20, paddingHorizontal: 40, marginBottom: 30,},
   targetcard: {width: "100%", maxWidth: 320, borderRadius: 14, padding: 16, marginBottom: 30, borderWidth: 1,},
-  targetrow: {flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 12},
+  targetrow: {flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 12,},
   targetlabel: {fontSize: 20, fontWeight: "500", marginRight: 10,},
   targetinputwrapper: {width: 80, borderRadius: 8, paddingHorizontal: 8, paddingVertical: 4,},
-  number: {fontSize: 20, fontWeight: "500"},
+  number: {fontSize: 20, fontWeight: "500",},
   buttons: {flexDirection: "row", gap: 16, marginBottom: 30,},
   button: {paddingVertical: 12, paddingHorizontal: 28, borderRadius: 8, alignItems: "center",},
-  buttonText: {fontSize: 18, fontWeight: "600", padding: 5},
+  buttonText: {fontSize: 18, fontWeight: "600", padding: 5,},
   resultcontainer: {height: 140, marginTop: 10},
   result: {borderWidth: 1, borderRadius: 10, padding: 16, width: "100%", maxWidth: 250, alignItems: "center",},
   resultText: {fontSize: 18, marginVertical: 2,},
-  close: {color: "#e99e1cff", fontWeight: "500"},
+  close: {color: "#e99e1cff", fontWeight: "500",},
   perfect: {marginTop: 8, fontWeight: "700", color: "#59a76c",},
 })
