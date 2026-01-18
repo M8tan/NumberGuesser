@@ -13,9 +13,9 @@ export default function Index() {
   const [targetchange, settargetchange] = useState(false);
   const [validtarget, setvalidtarget] = useState(true);
   const [shaaahor, setshaaahor] = useState(false);
-  const ThemeKey = "@ThemeKey";
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const startgame = () => {
+const ThemeKey = "@ThemeKey";
+const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+const startgame = () => {
     if (running) return;
     setvalidtarget(true);
     settargetchange(false);
@@ -31,7 +31,7 @@ export default function Index() {
       setvalue((prev => prev + 1));
     }, 20); //Used to be 25, changed to 20 for higher speed
   };
-  const stopgame = () => {
+const stopgame = () => {
     if (!running) return;
     setrunning(false);
     if (intervalRef.current) {
@@ -42,7 +42,7 @@ export default function Index() {
       settries(0);
     }
   };
-  const settargethandler = () => {
+const settargethandler = () => {
     if (running) {settargettemp('');return};
     const parsed = Number(targettemp);
     if (isNaN(parsed) || parsed <= 0 || parsed >= 999999) {
@@ -60,7 +60,7 @@ export default function Index() {
     settargettemp('');
     setvalidtarget(true);
   };
-  const themeanimation = useRef(new Animated.Value(shaaahor ? 1 : 0)).current;
+const themeanimation = useRef(new Animated.Value(shaaahor ? 1 : 0)).current;
   useEffect(() => {
     Animated.timing(themeanimation, {
       toValue: shaaahor ? 1 : 0,
@@ -88,18 +88,18 @@ useEffect(() => {
       console.log("Save theme failed :( " ,e)
     }
   };
-  savetheme();}, [shaaahor])
-  const target_value_difference = Math.abs(currentroundtarget - value);
+  savetheme();}, [shaaahor]);
+const target_value_difference = Math.abs(currentroundtarget - value);
  
-  const backgroundColor = themeanimation.interpolate({
+const backgroundColor = themeanimation.interpolate({
     inputRange: [0, 1],
     outputRange: ["#f8fafc", "#020617"]
   });
-  const textcolor = themeanimation.interpolate({
+const textcolor = themeanimation.interpolate({
     inputRange: [0, 1],
     outputRange: ["#0f172a", "#e5e7eb"]
   });
-  const inputbackgroundcolor = themeanimation.interpolate({
+const inputbackgroundcolor = themeanimation.interpolate({
   inputRange: [0, 1],
   outputRange: ["#ffffff", "#020617"],
 });
@@ -108,7 +108,9 @@ const inputtextcolor = themeanimation.interpolate({
   inputRange: [0, 1],
   outputRange: ["#0f172a", "#e5e7eb"],
 });
-  if (value === 1000000) stopgame();
+
+if (value === 1000000) stopgame();
+
   return (
     <>
     <Stack.Screen options={{headerShown: false}} />
@@ -151,8 +153,7 @@ const inputtextcolor = themeanimation.interpolate({
     </Animated.ScrollView>
     </>
   );
-  
-}
+};
 
 const harry = StyleSheet.create({
   container: {flex: 1, alignItems: "center", padding: 24,},
