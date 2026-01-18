@@ -1,3 +1,2 @@
 add close calls
 add encouraging messages
-improve outcome ui
