@@ -109,7 +109,7 @@ const inputtextcolor = themeanimation.interpolate({
   outputRange: ["#0f172a", "#e5e7eb"],
 });
 
-if (value === 1000000) stopgame();
+if (value === 1000000) stopgame(); // Counter limit
 
   return (
     <>
